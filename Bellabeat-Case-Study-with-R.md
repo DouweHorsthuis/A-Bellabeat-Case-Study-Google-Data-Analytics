@@ -1,11 +1,11 @@
 Case Study: How Can a Wellness Technology Company Play It Smart? Using R
 ================
 Douwe John Horsthuis
-1/18/2022
+2/15/2022
 
 # Bellabeat
 
-![](C:%5CUsers%5Cdouwe%5CDropbox%20(EinsteinMed)%5CGoogle%20analytics%20course%5Ccase%20study%5Cimages%5Cmain_bellabeat.PNG)
+![](https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/images/main_bellabeat.PNG)
 
 ## About the Company
 
