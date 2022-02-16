@@ -56,18 +56,15 @@ library(gridExtra)
 And then we load the data and take a look to get some idea of how the data looks
   
 ```{r load data, warning=FALSE}
-d_activity    <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\dailyActivity_merged.csv")
-d_calories    <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\dailyCalories_merged.csv")
-d_intensities <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\dailyIntensities_merged.csv")
-d_steps       <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\dailySteps_merged.csv")
+d_activity    <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/dailyActivity_merged.csv")
+d_calories    <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/dailyCalories_merged.csv")
+d_intensities <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/dailyIntensities_merged.csv")
+d_steps       <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/dailySteps_merged.csv")
 
-s_heartrate   <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\heartrate_seconds_merged.csv")
-h_calories    <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\hourlyCalories_merged.csv")
-h_intensitie  <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\hourlyIntensities_merged.csv")
-h_steps       <- read.csv("C:\\Users\\douwe\\Dropbox (EinsteinMed)\\Google analytics course\\case study\\data\\hourlySteps_merged.csv")
-
-
-
+s_heartrate   <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/heartrate_seconds_merged.csv")
+h_calories    <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/hourlyCalories_merged.csv")
+h_intensitie  <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/hourlyIntensities_merged.csv")
+h_steps       <- read.csv("https://github.com/DouweHorsthuis/A-Bellabeat-Case-Study-Google-Data-Analytics/blob/main/data/hourlySteps_merged.csv")
 ```
   
 ### The day-to-day data   
