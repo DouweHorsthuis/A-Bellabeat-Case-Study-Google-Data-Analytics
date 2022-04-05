@@ -145,43 +145,43 @@ the d\_activity data frame. We will test this by using the identical
 function:
 
 ``` r
-identical(d_activity[['Calories']],d_calories[['Calories']])
+identical(as.integer(d_activity[['Calories']]),d_calories[['Calories']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 ``` r
-identical(d_activity[['TotalSteps']],d_steps[['StepTotal']])
+identical(as.integer(d_activity[['TotalSteps']]),d_steps[['StepTotal']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 After finding out we don’t need to use the smaller data frames, we
 compare all the columns in the d\_intensities data frame:
 
 ``` r
-identical(d_activity[['SedentaryMinutes']],d_intensities[['SedentaryMinutes']])
+identical(as.integer(d_activity[['SedentaryMinutes']]),d_intensities[['SedentaryMinutes']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 ``` r
-identical(d_activity[['LightlyActiveMinutes']],d_intensities[['LightlyActiveMinutes']])
+identical(as.integer(d_activity[['LightlyActiveMinutes']]),d_intensities[['LightlyActiveMinutes']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 ``` r
-identical(d_activity[['FairlyActiveMinutes']],d_intensities[['FairlyActiveMinutes']])
+identical(as.integer(d_activity[['FairlyActiveMinutes']]),d_intensities[['FairlyActiveMinutes']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 ``` r
-identical(d_activity[['VeryActiveMinutes']],d_intensities[['VeryActiveMinutes']])
+identical(as.integer(d_activity[['VeryActiveMinutes']]),d_intensities[['VeryActiveMinutes']])
 ```
 
-    ## [1] FALSE
+    ## [1] TRUE
 
 ``` r
 identical(d_activity[['SedentaryActiveDistance']],d_intensities[['SedentaryActiveDistance']])
@@ -313,13 +313,13 @@ If we would only look at the average, than this plot confirms that
 people are also burning less calories. And since Calories would be
 burned for all types of actives, **this might indicate that people
 simply stop doing as much exercise after a while**. This might be an
-important measure for the company to know. However, when we look at the
-individual data points, we see something odd. It seems like the last
-day, everyone is doing less. This could be cause by several things when
-collecting data, including having the same time frame (instead of 24h
-maybe only data until 12Pm was used) or maybe it was a holiday (people
-might move different). To be clear we will plot the same data without
-the last day.
+important measure for the company to know. **However, when we look at
+the individual data points, we see something odd.** It seems like the
+last day, everyone is doing less. This could be cause by several things
+when collecting data, including having the same time frame (instead of
+24h maybe only data until 12Pm was used) or maybe it was a holiday
+(people might move different). To be clear we will plot the same data
+without the last day.
 
 ### Excluding last dates
 
@@ -434,10 +434,10 @@ for(i in 1:nrow(d_activity)) {
   ii<-ii+1}
 }
 
-n_distinct(active_people)
+length(active_people)
 ```
 
-    ## [1] 1
+    ## [1] 21
 
 ``` r
 #using the ID of the active people to create new variables
@@ -448,8 +448,11 @@ n_distinct(activity_not_in_use$Id)
 
     ## [1] 12
 
-Now that we have all the people that are still active, we can look at
-their data to see if it’s different from everyone grouped together.
+The outcome here says that in total we have 33 people, of those 33 21
+have collected data until the end and only 12 have not completed the
+whole collection. Now that we have all the people that are still active,
+we can look at their data to see if it’s different from everyone grouped
+together.
 
 ### Comparing 2 groups on group level
 
@@ -589,7 +592,7 @@ plot7<-ggplot(data=activity_in_use)+
   theme_light()+
   theme(axis.text.x = element_text(angle = 20),legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-10'))+
-  ggtitle("Individual steps active group")+
+  ggtitle("Active group")+
   xlab("Time")+
   ylab("Total steps")
 
@@ -601,11 +604,11 @@ plot8<-ggplot(data=activity_not_in_use)+
   theme_light()+
   theme(axis.text.x = element_text(angle = 20),legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-10'))+
-  ggtitle("Individual steps not active group")+
+  ggtitle("Non-active group")+
   xlab("Time")+
   ylab("Total steps")
 
-grid.arrange(plot7, plot8, ncol=2)
+grid.arrange(plot7, plot8, ncol=2, top="Individual steps per ID")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/comparing%20both%20groups%20on%20individual%20level%20separated-1.png)<!-- -->
@@ -626,7 +629,7 @@ plot9<-ggplot(data=activity_in_use)+
   theme(axis.text.x = element_text(angle = 20),legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 400))+
-  ggtitle("Light activity, active people")+
+  ggtitle("Active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
@@ -638,7 +641,7 @@ plot10<-ggplot(data=activity_not_in_use)+
   theme(legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 400))+
-  ggtitle("Light activity, not-active people")+
+  ggtitle("Non-active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
@@ -649,7 +652,7 @@ plot11<-ggplot(data=activity_in_use)+
   theme(axis.text.x = element_text(angle = 20),legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 90))+
-  ggtitle("Medium activity, active people")+
+  ggtitle("Active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
@@ -661,7 +664,7 @@ plot12<-ggplot(data=activity_not_in_use)+
   theme(legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 90))+
-  ggtitle("Medium activity, not-active people")+
+  ggtitle("Non-active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
@@ -672,7 +675,7 @@ plot13<-ggplot(data=activity_in_use)+
   theme(axis.text.x = element_text(angle = 20),legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 110))+
-  ggtitle("Heavy activity, active people")+
+  ggtitle("Active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
@@ -684,23 +687,23 @@ plot14<-ggplot(data=activity_not_in_use)+
   theme(legend.position = "none")+
   xlim(as.Date('2016-04-10'), as.Date('2016-05-11'))+
   coord_cartesian(ylim = c(0, 110))+
-  ggtitle("Heavy activity, not-active people")+
+  ggtitle("Non-active people")+
   xlab("Time")+
   ylab("Minutes of activity")
 
-grid.arrange(plot9, plot10, ncol=2)
+grid.arrange(plot9, plot10, ncol=2, top="Light activity")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/activity%20per%20individual%20per%20activity%20level-1.png)<!-- -->
 
 ``` r
-grid.arrange(plot11, plot12, ncol=2)
+grid.arrange(plot11, plot12, ncol=2, top="Medium activity")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/activity%20per%20individual%20per%20activity%20level-2.png)<!-- -->
 
 ``` r
-grid.arrange(plot13, plot14, ncol=2)
+grid.arrange(plot13, plot14, ncol=2, top="Heavy activity")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/activity%20per%20individual%20per%20activity%20level-3.png)<!-- -->
@@ -774,16 +777,16 @@ plot15 <-ggplot(data=int_acti_hour, aes(x=Time, y=mean_total_int)) +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Active people\nAverage Total Intensity vs. Time")
+  labs(title="Active people")
 
 plot16 <- ggplot(data=int_not_acti_hour, aes(x=Time, y=mean_total_int)) + 
   geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Non-active people\nAverage Total Intensity vs. Time")
+  labs(title="Non-active people")
 
-grid.arrange(plot15, plot16, ncol=2)
+grid.arrange(plot15, plot16, ncol=2, top="Average Total Intensity vs. Time")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/intensitie%20on%20hourly%20bases%20grouped-1.png)<!-- -->
@@ -843,45 +846,45 @@ plot17 <-ggplot(data=active_1, aes(x=Time, y=mean_total_int)) + geom_histogram(s
   theme_light()+
   theme(axis.text.x = element_text(angle = 45)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Active person 1\nAverage Total Intensity vs. Time")
+  labs(title="Active person 1")
 
 plot18 <-ggplot(data=active_2, aes(x=Time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Active person 2\nAverage Total Intensity vs. Time")
+  labs(title="Active person 2")
 
 plot19 <-ggplot(data=active_3, aes(x=Time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Active person 3\nAverage Total Intensity vs. Time")
+  labs(title="Active person 3")
 
 plot20 <-ggplot(data=n_active_1, aes(x=Time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Not active person 1\nAverage Total Intensity vs. Time")
+  labs(title="Non-active person 1")
 
 plot21 <-ggplot(data=n_active_2, aes(x=Time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Not active person 2\nAverage Total Intensity vs. Time")
+  labs(title="Non-active person 2")
 
 plot22 <-ggplot(data=n_active_3, aes(x=Time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkblue') +
   theme_light()+
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(0, 25))+
-  labs(title="Not active person 3\nAverage Total Intensity vs. Time")
+  labs(title="Non-active person 3")
 
-grid.arrange(plot17, plot18, plot19, ncol=3)
+grid.arrange(plot17, plot18, plot19, ncol=3, top="Average Total Intensity vs. Time")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/intensitie%20on%20hourly%20bases%20individual-1.png)<!-- -->
 
 ``` r
-grid.arrange(plot20, plot21, plot22, ncol=3)
+grid.arrange(plot20, plot21, plot22, ncol=3, top="Average Total Intensity vs. Time")
 ```
 
 ![](Bellabeat-Case-Study-with-R_files/figure-gfm/intensitie%20on%20hourly%20bases%20individual-2.png)<!-- -->
@@ -942,7 +945,8 @@ Eyal T., Finkelstein S.
 (2010)](http://www.communicationcache.com/uploads/1/0/8/8/10887248/how_positive_and_negative_feedback_motivate_goal_pursuit.pdf),
 they say that novices prefer and are more sensitive to positive
 feedback, where experts are more likely to look for negative feedback.
-However when dealing with costumers this might not be ideal.
+However when dealing with costumers negative feedback might not be
+ideal.
 
 ### Second recommendation
 
